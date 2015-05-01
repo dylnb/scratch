@@ -42,19 +42,16 @@ boy = [1,2,3]
 aboy :: Focus Ent
 aboy = lift $ lift boy
 
-
 domain :: [Ent]
 domain = [1..6]
 
-some :: (Ent -> Focus Bool) -> Focus Ent
-some restr = filtM restr domain
-  where
-    filtM :: MonadPlus m => (a -> m Bool) -> [a] -> m a
-    filtM _ [] = mzero
-    filtM p (x:xs) =
-      do flg <- p x
-         let hd = if flg then p x >> return x else mzero
-         hd `mplus` filtM p xs
+some :: MonadPlus m => (Ent -> m Bool) -> m Ent
+some restr = filtM restr (take 3 domain)
+  where filtM :: MonadPlus m => (a -> m Bool) -> [a] -> m a
+        filtM _ [] = mzero
+        filtM p (x:xs) = do flg <- p x
+                            let hd = if flg then p x >> return x else mzero
+                            hd `mplus` filtM p xs
 
 foc :: Ent -> Focus Ent
 foc x = lift $ PairT [x] [0..x]
@@ -84,3 +81,32 @@ instance MonadTrans TupleT where
 instance MonadPlus m => MonadPlus (TupleT m) where
   mzero = TupleT [mzero]
   TupleT xs `mplus` TupleT ys = TupleT $ xs `mplus` ys
+
+
+------------------------------------------------------------------------------
+
+data PointedT m a = PointedT {point :: Maybe a, alts :: m a}
+
+instance (Show a, Show (m a)) => Show (PointedT m a) where
+  show (PointedT x m) = show (x, m)
+
+instance Monad m => Monad (PointedT m) where
+  return x = PointedT (return x) (return x)
+  PointedT pt m >>= k = PointedT newpt (m >>= alts . k)
+    where newpt = case pt of Nothing -> Nothing
+                             Just x  -> point $ k x
+
+instance MonadPlus m => MonadPlus (PointedT m) where
+  mzero = PointedT mzero mzero
+  (PointedT x m) `mplus` (PointedT y n) = PointedT (x `mplus` y) (m `mplus` n)
+
+type DynFocus = StateT Env (PointedT [])
+
+focD :: a -> DynFocus a
+focD = lift . return
+
+run :: StateT Env [] a -> [(a,Env)]
+run = flip runStateT [1]
+
+runD :: DynFocus a -> PointedT [] (a,Env)
+runD = flip runStateT [1]
