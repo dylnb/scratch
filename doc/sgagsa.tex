@@ -1,0 +1,78 @@
+\documentclass{article}
+
+\usepackage{bumfpreamble}
+\usepackage{tikz-cd}
+
+\newcommand{\SG}[1]{\textsf{SG}#1}
+\newcommand{\GS}[1]{\textsf{GS}#1}
+
+\newcommand{\type}{\phantomas{{}={}}{::}}
+
+\begin{document}
+
+\begin{align*}
+F &\type \p{a\sto b} \sto \SG{a} \sto \SG{b}
+&
+H &\type \p{a\sto b} \sto \GS{a} \sto \GS{b}
+%
+\\
+%
+F &= \l fm\dt \set{\l r\dt f\,\p{\alpha\,r} \giv \alpha \in m}
+&
+H &= \l fmr\dt \set{f\,x \giv x\in m\,r}
+\end{align*}
+
+\begin{align*}
+\varepsilon &\type \SG{a} \sto \GS{a}\\
+\varepsilon &= \l mr\dt \set{\alpha\,r \giv \alpha\in m}
+\end{align*}
+
+\bigskip
+
+\begin{center}
+\begin{tikzcd}[row sep=large, column sep=large]
+\SG{a} \arrow{d}{\varepsilon} \arrow{r}{F\,f} & \SG{b} \arrow{d}{\varepsilon} \\
+\GS{a}                        \arrow{r}{H\,f} & \GS{b}
+\end{tikzcd}
+\end{center}
+
+\bigskip
+
+\begin{align*}
+\varepsilon \circ F\,f
+&=
+\l m\dt \varepsilon\,\p{F\,f\,m}
+&
+H\,f \circ \varepsilon
+&=
+\l m\dt H\,f\,\p{\varepsilon\,m}
+%
+\\
+%
+&= \l m\dt \epsilon\,\set{\l r\dt f\,\p{\alpha\,r} \giv \alpha\in m}
+&
+&= \l m\dt H\,f\,\p{\l r\dt \set{\alpha\,r \giv \alpha\in m}}
+%
+\\
+%
+&= \l mr\dt \set{\beta\,r \giv \beta\in \set{\l r\dt f\,\p{\alpha\,r} \giv \alpha\in m}}
+&
+&= \l mr\dt \set{f\,x \giv x \in \set{\alpha\,r \giv \alpha\in m}}
+%
+\\
+%
+&= \l mr\dt \set{f\,\p{\alpha\,r} \giv \alpha\in m}
+&
+&= \l mr\dt \set{f\,\p{\alpha\,r} \giv \alpha\in m}
+\end{align*}
+
+\dotfill
+
+
+\begin{align*}
+\delta &\type \GS{a} \sto \SG{a}
+\delta &= \l m\dt \set{f \giv \forall r\dt f\,r \in m\,r}
+\end{align*}
+
+
+\end{document}
