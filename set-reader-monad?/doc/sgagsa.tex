@@ -22,12 +22,12 @@ F &= \l fm\dt \set{\l r\dt f\,\p{\alpha\,r} \giv \alpha \in m}
 H &= \l fmr\dt \set{f\,x \giv x\in m\,r}
 \end{align*}
 
+\dotfill
+
 \begin{align*}
 \varepsilon &\type \SG{a} \sto \GS{a}\\
 \varepsilon &= \l mr\dt \set{\alpha\,r \giv \alpha\in m}
 \end{align*}
-
-\bigskip
 
 \begin{center}
 \begin{tikzcd}[row sep=large, column sep=large]
@@ -35,8 +35,6 @@ H &= \l fmr\dt \set{f\,x \giv x\in m\,r}
 \GS{a}                        \arrow{r}{H\,f} & \GS{b}
 \end{tikzcd}
 \end{center}
-
-\bigskip
 
 \begin{align*}
 \varepsilon \circ F\,f
@@ -49,7 +47,7 @@ H\,f \circ \varepsilon
 %
 \\
 %
-&= \l m\dt \epsilon\,\set{\l r\dt f\,\p{\alpha\,r} \giv \alpha\in m}
+&= \l m\dt \varepsilon\,\set{\l r\dt f\,\p{\alpha\,r} \giv \alpha\in m}
 &
 &= \l m\dt H\,f\,\p{\l r\dt \set{\alpha\,r \giv \alpha\in m}}
 %
@@ -68,12 +66,17 @@ H\,f \circ \varepsilon
 
 \dotfill
 
-
 \begin{align*}
 \delta &\type \GS{a} \sto \SG{a}\\
-\delta &= \l m\dt \set{\beta \giv \forall r\dt \beta\,r \in m\,r}
+\delta &= \l m\dt \set{\l r\dt \sigma\,\p{m\,r} \giv \sigma\in\textsf{CF}}
 \end{align*}
 
+\begin{center}
+\begin{tikzcd}[row sep=large, column sep=large]
+\SG{a} \arrow{r}{F\,f} & \SG{b} \\
+\GS{a}  \arrow{u}{\delta} \arrow{r}{H\,f} & \GS{b} \arrow{u}{\delta} 
+\end{tikzcd}
+\end{center}
 
 \begin{align*}
 \delta \circ H\,f
@@ -88,13 +91,19 @@ F\,f \circ \delta
 %
 &= \l m\dt \delta\,\p{\l r\dt \set{f\,x \giv x\in m\,r}}
 &
-&= \l m\dt F\,f\,\set{\beta \giv \forall r\dt \beta\,r \in m\,r}
+&= \l m\dt F\,f\,\set{\l r\dt \sigma\,\p{m\,r} \giv \sigma \in \textsf{CF}}
 %
 \\
 %
-&= \l m\dt \set{\beta \giv \forall r\dt \beta\,r \in \set{f\,x \giv x\in m\,r}}
+&= \l m\dt \set{\l r\dt \sigma\,\set{f\,x \giv x \in m\,r} \giv \sigma\in \textsf{CF}}
 &
-&= \l m\dt \set{\l r\dt f\,\p{\beta\,r} \giv \forall r\dt \beta\,r\in m\,r}
+&= \l m\dt \set{\l r\dt f\,\p{\beta\,r} \giv \beta \in \set{\l r\dt \sigma\,\p{m\,r} \giv \sigma \in \textsf{CF}}}
+%
+\\
+%
+&= \l m\dt \set{\l r\dt f\,\p{\sigma\,\p{m\,r}} \giv \sigma\in \textsf{CF}}
+&
+&= \l m\dt \set{\l r\dt f\,\p{\sigma\,\p{m\,r}} \giv \sigma\in \textsf{CF}}
 \end{align*}
 
 
